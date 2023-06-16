@@ -1,5 +1,5 @@
 import { colors } from './colors';
-import { names } from './team_data.js';
+import { names,connections } from './team_data.js';
 
 export const nodes = [];
 export const links = [];
@@ -60,16 +60,20 @@ const connectMainNodes = (source, target, relationshipText,thickness = 1) => {
 };
 
 export const addMainNodes = () => {
+  console.log('addMainNodes');
   names.forEach((name) => {
     addMainNode(name);
   });
 }
 
 export const mapConnections = () => {
+  console.log('mapConnections');
   names.forEach((name) => {
-    name.connections.forEach((connection) => {
-      const target = names.find((n) => n.id === connection);
-      connectMainNodes(name, target, connection.relationship);
+    connections.forEach((connection) => {
+      if(connection.source === name.id){
+        const target = names.find((n) => n.id === connection.target);
+        connectMainNodes(name, target, connection.relationship);
+      }
     });
   });
 }

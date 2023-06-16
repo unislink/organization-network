@@ -2,7 +2,6 @@
   "name": "organization-network",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "scripts": {
     "parcel:build": "rimraf dist && parcel build --public-url ."
   },
