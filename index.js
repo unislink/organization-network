@@ -15,6 +15,9 @@ import {
   MANY_BODY_STRENGTH,
   nodeSizes,
   defaultNodeSize,
+  textoffset,
+  subtextOffset,
+  imageOffset,
 } from './data';
 
 
@@ -25,6 +28,11 @@ const width = +svg.attr('width');
 const height = +svg.attr('height');
 const centerX = width / 2;
 const centerY = height / 2;
+
+//initail center
+const initialX = window.innerWidth / 2; // Set initial X position to the center of the screen
+const initialY = window.innerHeight / 2; // Set initial Y position to the center of the screen
+
 
 //zoom functions
 const zoomBehavior = zoom().on('zoom', zoomed);
@@ -47,7 +55,10 @@ const simulation = forceSimulation(nodes)
       (link) => link.distance
     )
   ) //ex
-  .force('center', forceCenter(centerX, centerY));
+  .force('center', forceCenter(initialX, initialY))
+
+
+
 
 //for dragging
 const dragInteraction = drag().on(
@@ -80,6 +91,7 @@ const labels = svg
   .append('text')
   .attr('class', 'link-label')
   .attr('text-anchor', 'middle')
+	.style('font-weight', 'bold')
   .attr('dy', -5)
   .attr('dx', -5)
   .text((link) => link.relationship);
@@ -176,6 +188,7 @@ const subtext = svg
 
 //simulation
 simulation.on('tick', () => {
+  
   circles
     .attr('cx', (node) => node.x)
     .attr('cy', (node) => node.y);
@@ -184,7 +197,7 @@ simulation.on('tick', () => {
     .attr(
       'y',
       (node) =>
-        node.y + node.size / 2 + node.textoffset
+        node.y + node.size / 2 +textoffset
     )
     .style('font-size', (node) =>
       Math.min(node.size / 1.5, 1000)
@@ -196,8 +209,7 @@ simulation.on('tick', () => {
       'y',
       (node) =>
         node.y +
-        node.size / 2 +
-        node.subtextOffset
+        node.size / 2 + subtextOffset
     )
     .style('font-size', (node) =>
       Math.min(node.size / 3, 1000)
@@ -225,9 +237,9 @@ simulation.on('tick', () => {
         (link.source.y + link.target.y) / 2
     );
   images
-    .attr('x', (node) => node.x - (node.size *node.imageOffset) / 2)  // Adjust x position to center the image
-    .attr('y', (node) => node.y - (node.size *node.imageOffset) / 2)  // Adjust y position to center the image
-    .attr('width', (node) => node.size *node.imageOffset)  // Adjust width to 70% of node size
-    .attr('height', (node) => node.size *node.imageOffset);  // Adjust height to 70% of node size
+    .attr('x', (node) => node.x - (node.size *imageOffset) / 2)  // Adjust x position to center the image
+    .attr('y', (node) => node.y - (node.size *imageOffset) / 2)  // Adjust y position to center the image
+    .attr('width', (node) => node.size *imageOffset)  // Adjust width to 70% of node size
+    .attr('height', (node) => node.size *imageOffset);  // Adjust height to 70% of node size
 
 });

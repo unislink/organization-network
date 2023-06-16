@@ -1,4 +1,6 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE html>
+<html>
+  <head>
     <title>instructor version</title>
     <style>
       body {
@@ -8,10 +10,19 @@
       }
     </style>
     <script src="https://unpkg.com/d3@6.2.0/dist/d3.min.js"></script>
-  </    <script src='index.js'></script>
-head>
+    <script src='index.js'></script>
+    <script>
+      // Set SVG container dimensions based on window size
+      window.addEventListener('DOMContentLoaded', () => {
+        const svgContainer = document.getElementById('container');
+        svgContainer.setAttribute('width', window.innerWidth);
+        svgContainer.setAttribute('height', window.innerHeight);
+      });
+    </script>
+  </head>
   <body>
-    <svg id="container" width="960" height="960"></svg>
-  
-
-<script src="bundle.js"></script></body></html>
+    <svg
+      id="container"
+    ></svg>
+  </body>
+</html>
